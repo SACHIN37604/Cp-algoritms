@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> findZ(string A , string B){
+  int i , right , left; 
+  left = 0;
+  right = 0; 			
+  vector<int> z_values;
+  z_values.push_back(0);
+  for(i = 1 ; i < A.length() ; i++){
+    if(right < i){
+      right = left = i;
+      while(right < A.length() && right - left < B.length() && A[right] == B[right - left]){
+        right++;
+      }
+      z_values.push_back(right - left);
+      right--;
+    }
+    else{
+      int i1 = i - left;
+      if(z_values[i1] < right - i + 1){
+        z_values.push_back(z_values[i1]);
+      }
+      else{
+      	left = i;
+      	while(right < A.length() && right - left < B.length() && A[right] == B[right-left]){
+      	  right++;
+      	}
+      	z_values.push_back(right - left);
+      	right--;
+      }
+    }
+  }
+  return z_values;
+}
+int main(){
+  string A, B;
+  cin >> A >> B;
+  vector<int> Z_values = findZ(A , B);
+  for(auto it: Z_values)
+    cout << it << " ";
+  return 0;
+}
