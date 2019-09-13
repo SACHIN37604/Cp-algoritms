@@ -1,0 +1,36 @@
+/*
+xabcabzabc
+abc
+0 3 0 0 2 0 0 3 0 0 
+*/
+vector<int> solve(string a, string b){
+    b = b + '$' + a;
+    int right = 0;
+    int left = 0;
+    vector<int> ans;
+    for(int i = 1 ; i < b.length() ; i++){
+        if(i > right){
+            left = right = i;
+            while(right < b.length() && b[right] == b[right - left]){
+                right++;
+            }
+            ans.push_back(right - left);
+            right--;
+        }
+        else{
+            int i1 = i - left;
+            if(ans[i1] < right - i + 1){
+                ans.push_back(ans[i1]);
+            }
+            else{
+                left = i;
+                while(right < b.length() && ans[right - left] == ans[right]){
+                    right++;
+                }
+                ans.push_back(right - left);
+                right--;
+            }
+        }
+    }
+    return ans;
+}
